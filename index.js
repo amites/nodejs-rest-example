@@ -16,11 +16,11 @@ app.use(bodyParser.json());
 
 // Define value to return for GET users
 app.get('/api/users', (req, res) => {
-  return res.status(200).send({
+  res.status(200).send({
     success: 'true',
     message: 'users retrieved successfully',
     users: dbUsers
-  })
+  });
 });
 
 // Define value to return for GET single user
@@ -39,6 +39,30 @@ app.get('/api/users/:userId', (req, res) => {
       user: {}
     });
   }
+});
+
+// Define value to return for POST users
+app.post('/api/users', (req, res) => {
+  let email = req.body.email;
+  if (!email) {
+    return res.status(400).send({
+      success: 'false',
+      message: 'Did not receive an email address for new user',
+      user: {}
+    });
+  }
+
+  let newUser = {
+    id: dbUsers.length + 1, // length is indexed from 1,
+    email: email
+  };
+  dbUsers.push(newUser);
+
+  return res.status(201).send({
+    success: 'true',
+    message: 'Created new user',
+    user: newUser
+  });
 });
 
 app.listen(port, () => {
