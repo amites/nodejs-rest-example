@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 // Define value to return for GET users
 app.get('/api/users', (req, res) => {
-  res.status(200).send({
+  return res.status(200).send({
     success: 'true',
     message: 'users retrieved successfully',
     users: dbUsers
@@ -45,7 +45,7 @@ app.get('/api/users/:userId', (req, res) => {
 app.post('/api/users', (req, res) => {
   let email = req.body.email;
   if (!email) {
-    return res.status(400).send({
+    res.status(400).send({
       success: 'false',
       message: 'Did not receive an email address for new user',
       user: {}
@@ -53,7 +53,7 @@ app.post('/api/users', (req, res) => {
   }
 
   let newUser = {
-    id: dbUsers.length + 1, // length is indexed from 1,
+    id: dbUsers.length, // length is indexed from 1,
     email: email
   };
   dbUsers.push(newUser);
@@ -62,6 +62,40 @@ app.post('/api/users', (req, res) => {
     success: 'true',
     message: 'Created new user',
     user: newUser
+  });
+});
+
+// Define value to return for PUT single user
+// PATCH not implemented since there is
+// only 1 value to update making PUT an equivalent
+app.put('/api/users/:userId', (req, res) => {
+  let userId = req.params.userId - 1; // shift 1 to left to match 0 based index
+
+  // Verify user is valid
+  if (!dbUsers[userId]) {
+    return res.status(404).send({
+      success: 'false',
+      message: `user with id ${userId + 1} does not exist`, // shift 1 to right to match original request
+      user: {}
+    });
+  }
+
+  // Verify data payload is valid
+  let email = req.body.email;
+  if (!email) {
+    return res.status(400).send({
+      success: 'false',
+      message: 'Did not receive an email address for user',
+      user: {}
+    });
+  }
+
+  dbUsers[userId].email = email;
+
+  return res.status(200).send({
+    success: 'true',
+    message: 'Updated user successfully',
+    user: dbUsers[userId]
   });
 });
 
