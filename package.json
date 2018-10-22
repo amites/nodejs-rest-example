@@ -1,0 +1,27 @@
+{
+  "name": "rest-example",
+  "version": "1.0.0",
+  "description": "A sample node.js REST api server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amites/nodejs-rest-example.git"
+  },
+  "keywords": [
+    "rest"
+  ],
+  "author": "Alvin Mites",
+  "license": "CC-BY-NC-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/amites/nodejs-rest-example/issues"
+  },
+  "homepage": "https://github.com/amites/nodejs-rest-example#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "sqlite3": "^4.0.2"
+  }
+}
