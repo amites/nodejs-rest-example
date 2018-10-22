@@ -45,7 +45,7 @@ app.get('/api/users/:userId', (req, res) => {
 app.post('/api/users', (req, res) => {
   let email = req.body.email;
   if (!email) {
-    res.status(400).send({
+    return res.status(400).send({
       success: 'false',
       message: 'Did not receive an email address for new user',
       user: {}
@@ -65,10 +65,9 @@ app.post('/api/users', (req, res) => {
   });
 });
 
-// Define value to return for PUT single user
-// PATCH not implemented since there is
-// only 1 value to update making PUT an equivalent
-app.put('/api/users/:userId', (req, res) => {
+// Define value to return for PATCH single user
+// PUT would be handled the same but is defined as replacing the existing record vs altering.
+app.patch('/api/users/:userId', (req, res) => {
   let userId = req.params.userId - 1; // shift 1 to left to match 0 based index
 
   // Verify user is valid
@@ -96,6 +95,28 @@ app.put('/api/users/:userId', (req, res) => {
     success: 'true',
     message: 'Updated user successfully',
     user: dbUsers[userId]
+  });
+});
+
+// DELETE a single user
+app.delete('/api/users/:userId', (req, res) => {
+  let userId = req.params.userId - 1; // shift 1 to left to match 0 based index
+
+  // Verify user is valid
+  if (!dbUsers[userId]) {
+    return res.status(404).send({
+      success: 'false',
+      message: `user with id ${userId + 1} does not exist`, // shift 1 to right to match original request
+      user: {}
+    });
+  }
+
+  dbUsers.splice(userId, 1);  // Remove 1 entry starting at userId position
+
+  return res.status(200).send({
+    success: 'true',
+    message: `Successfully deleted user ${userId + 1}`, // shift 1 to right to match original request
+    user: {}
   });
 });
 
