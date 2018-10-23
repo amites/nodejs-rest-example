@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <array>
+    <element>1</element>
+    <element>2</element>
+    <element>3</element>
+  </array>
+  <boolean>true</boolean>
+  <color>#82b92c</color>
+  <number>123</number>
+  <object>
+    <a>b</a>
+    <c>d</c>
+    <e>f</e>
+  </object>
+  <string>Hello World</string>
+</root>
