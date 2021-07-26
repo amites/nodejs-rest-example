@@ -5,7 +5,7 @@ git checkout 04-DELETE
 
 # cURL commands
 # Check user data for current #2
-curl -X GET http://localhost:3000/api/user/2
+curl -X GET http://localhost:3000/api/users/2
 
 
 curl -X DELETE \
