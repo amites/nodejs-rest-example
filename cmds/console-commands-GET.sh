@@ -11,6 +11,6 @@ git checkout 01-GET
 curl -X GET http://localhost:3000/api/users
 
 
-curl -X GET http://localhost:3000/api/user/1
+curl -X GET http://localhost:3000/api/users/1
 
 
